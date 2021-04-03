@@ -5,7 +5,7 @@ import telegram
 import os.path
 
 class XsgdPriceSpider(scrapy.Spider):
-    name = 'xsgd_price'
+    name = 'xsgd_price_zilswap'
     allowed_domains = ['https://zilstream.com/tokens/xsgd']
     start_urls = ['https://zilstream.com/tokens/xsgd/']
     
@@ -30,11 +30,10 @@ class XsgdPriceSpider(scrapy.Spider):
         for line in lines:
             v = float(line.strip('\n'))
             d = abs(rate_usd - v)
-            if d > 0.01:
+            if d > 0.001:
                 percentage = (rate_usd - v)/rate_usd * 100
                 bot = telegram.Bot(token='1774766230:AAFJ8r2cf5P6gidpRgcH8-UGQPYoHrZ0b-8')
-                bot.send_message(687804705, "XSGD price alert({:.3}%): {:.4f} -> {:.4f}".format(percentage, v, rate_usd))
-                print("removing file")
+                bot.send_message(-542465219, "XSGD price alert({:.3}%): {:.4f} -> {:.4f}".format(percentage, v, rate_usd))
                 os.remove('xsgd_price.txt')
                 break
         
