@@ -3,7 +3,7 @@
 # This program is dedicated to the public domain under the CC0 license.
 
 import logging
-
+import subprocess
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
     Updater,
@@ -23,10 +23,11 @@ logger = logging.getLogger(__name__)
 
 
 def start(update: Update, _: CallbackContext) -> None:
-    update.message.reply_text("Running price script...")
-
+    subprocess.run(["scrapy", "runspider", "crawler/spiders/xsgd_price_report_zilswap.py"])
     return ConversationHandler.END
 
+def cancel(update: Update, _: CallbackContext) -> int:
+    return ConversationHandler.END
 
 def main() -> None:
     # Create the Updater and pass it your bot's token.
@@ -37,7 +38,9 @@ def main() -> None:
 
     # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('price', start)]
+        entry_points=[CommandHandler('price', start)],
+        states={},
+        fallbacks=[CommandHandler('cancel', cancel)],
     )
 
     dispatcher.add_handler(conv_handler)
