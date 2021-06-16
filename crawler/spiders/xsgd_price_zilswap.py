@@ -32,8 +32,9 @@ class XsgdPriceSpider(scrapy.Spider):
             d = abs(rate_usd - v)
             if d > 0.005:
                 percentage = (rate_usd - v)/rate_usd * 100
-                bot = telegram.Bot(token='1774766230:AAFJ8r2cf5P6gidpRgcH8-UGQPYoHrZ0b-8')
-                bot.send_message(-542465219, "XSGD price alert({:.3}%): {:.4f} -> {:.4f}".format(percentage, v, rate_usd))
+                if rate_usd > 0.755 or rate_usd < 0.71:
+                  bot = telegram.Bot(token='1774766230:AAFJ8r2cf5P6gidpRgcH8-UGQPYoHrZ0b-8')
+                  bot.send_message(-542465219, "XSGD price alert({:.3}%): {:.4f} -> {:.4f}".format(percentage, v, rate_usd))
                 os.remove('xsgd_price.txt')
                 break
         
