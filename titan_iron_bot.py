@@ -22,7 +22,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def start(update: Update, _: CallbackContext) -> None:
+def get_iron_supply(update: Update, _: CallbackContext) -> None:
+    subprocess.run(["scrapy", "runspider", "crawler/spiders/iron_token_report_supply.py"])
+    return ConversationHandler.END
+
+def get_titan_supply(update: Update, _: CallbackContext) -> None:
     subprocess.run(["scrapy", "runspider", "crawler/spiders/titan_token_report_supply.py"])
     return ConversationHandler.END
 
@@ -38,7 +42,7 @@ def main() -> None:
 
     # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('titan', start)],
+        entry_points=[CommandHandler('titan', get_titan_supply), CommandHandler('iron', get_iron_supply)],
         states={},
         fallbacks=[CommandHandler('cancel', cancel)],
     )
