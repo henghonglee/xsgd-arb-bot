@@ -5,7 +5,7 @@ import telegram
 import os.path
 
 class XsgdPriceSpider(scrapy.Spider):
-    name = 'xsgd_price_zilswap'
+    name = 'xsgd_price_report_zilswap'
     allowed_domains = ['https://zilstream.com/tokens/xsgd']
     start_urls = ['https://zilstream.com/tokens/xsgd/']
     

@@ -4,12 +4,10 @@
 
 import logging
 import subprocess
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
+from telegram import Update
 from telegram.ext import (
     Updater,
     CommandHandler,
-    MessageHandler,
-    Filters,
     ConversationHandler,
     CallbackContext,
 )

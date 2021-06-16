@@ -3,16 +3,18 @@ import telegram
 
 class TitanTokenSupplySpider(scrapy.Spider):
     name = 'titan_token_report_supply'
-    allowed_domains = ['https://polygonscan.com/token/0xaaa5b9e6c589642f98a1cda99b9d024b8407285a']
+    allowed_domains = ['https://polygonscan.com/']
     start_urls = ['https://polygonscan.com/token/0xaaa5b9e6c589642f98a1cda99b9d024b8407285a']
-
+    max_retries = 2
+    
     def parse(self, response):
         response_body = response.body.decode("utf-8")
         start = "id=\"ContentPlaceHolder1_hdnTotalSupply\" value=\""
-        start_idx = response_body.rfind(start)
+        start_idx = response_body.rfind(start) + len(start)
         end = "\" /></div>"
-        end_idx = response_body.rfind(end) + 1
-        supply_string = response_body[start_idx:end_idx].strip(",")
-        bot = telegram.Bot(token='1774766230:AAFJ8r2cf5P6gidpRgcH8-UGQPYoHrZ0b-8')
-        bot.send_message(-542465219, "TITAN Supply {:.4f}".format(supply_string))
+        end_idx = response_body.rfind(end)
+        supply_string = response_body[start_idx:end_idx].replace(',','')
+        supply_val = round(float(supply_string), 2)
+        bot = telegram.Bot(token='1857941381:AAHPfQwENHSdjxmSyEJt0wutj8PDLZwf81Y')
+        bot.send_message(-503777814, "TITAN Supply {:,}".format(supply_val))
         
