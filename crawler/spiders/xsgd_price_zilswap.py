@@ -54,7 +54,7 @@ class XsgdPriceSpider(scrapy.Spider):
             d = abs(rate_usd - v)
             if d > 0.005:
                 percentage = (rate_usd - v)/rate_usd * 100
-                if rate_usd > (api_rate/100*102) or rate_usd < (api_rate/100*98):
+                if rate_usd > (api_rate/100*101) or rate_usd < (api_rate/100*99):
                   bot = telegram.Bot(token='1774766230:AAFJ8r2cf5P6gidpRgcH8-UGQPYoHrZ0b-8')
                   bot.send_message(-542465219, "XSGD price alert({sym}{:.3}%): {:.3f} -> {:.3f}\nCurrent rate(SGD/USD): {:.5f}".format(percentage, v, rate_usd, api_rate, sym=(u'\U0001f7e2', u'\U0001f534')[percentage < 0]))
                 os.remove('xsgd_price.txt')
