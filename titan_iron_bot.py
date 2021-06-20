@@ -23,11 +23,11 @@ logger = logging.getLogger(__name__)
 
 
 def get_iron_supply(update: Update, _: CallbackContext) -> None:
-    subprocess.run(["scrapy", "runspider", "crawler/spiders/iron_token_report_supply.py"])
+    subprocess.run(["scrapy", "runspider", "crawler/spiders/iron_finance/iron_token_report_supply.py"])
     return ConversationHandler.END
 
 def get_titan_supply(update: Update, _: CallbackContext) -> None:
-    subprocess.run(["scrapy", "runspider", "crawler/spiders/titan_token_report_supply.py"])
+    subprocess.run(["scrapy", "runspider", "crawler/spiders/iron_finance/titan_token_report_supply.py"])
     return ConversationHandler.END
 
 def cancel(update: Update, _: CallbackContext) -> int:
